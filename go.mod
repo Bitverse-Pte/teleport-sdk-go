@@ -8,7 +8,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/gogo/protobuf v1.3.3
 	github.com/stretchr/testify v1.7.0
-	github.com/teleport-network/teleport v0.0.0-20220112101938-8be0f74da1ea
+	github.com/teleport-network/teleport v0.1.0-alpha1
 	github.com/tharsis/ethermint v0.10.0-alpha1
 	google.golang.org/grpc v1.43.0
 )
@@ -122,13 +122,13 @@ require (
 	github.com/tyler-smith/go-bip39 v1.1.0 // indirect
 	github.com/zondax/hid v0.9.0 // indirect
 	go.etcd.io/bbolt v1.3.6 // indirect
-	golang.org/x/crypto v0.0.0-20211215153901-e495a2d5b3d3 // indirect
+	golang.org/x/crypto v0.0.0-20220112180741-5e0467b6c7ce // indirect
 	golang.org/x/net v0.0.0-20211112202133-69e39bad7dc2 // indirect
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c // indirect
 	golang.org/x/sys v0.0.0-20211216021012-1d35b9e2eb4e // indirect
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
 	golang.org/x/text v0.3.7 // indirect
-	google.golang.org/genproto v0.0.0-20220111164026-67b88f271998 // indirect
+	google.golang.org/genproto v0.0.0-20220112215332-a9c7c0acf9f2 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/natefinch/npipe.v2 v2.0.0-20160621034901-c1b8fa8bdcce // indirect
