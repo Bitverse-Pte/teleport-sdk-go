@@ -8,7 +8,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.44.5
 	github.com/gogo/protobuf v1.3.3
 	github.com/stretchr/testify v1.7.0
-	github.com/teleport-network/teleport v0.1.0-alpha1
+	github.com/teleport-network/teleport v0.0.0-alpha1
 	github.com/tharsis/ethermint v0.10.0-alpha1
 	google.golang.org/grpc v1.43.0
 )
