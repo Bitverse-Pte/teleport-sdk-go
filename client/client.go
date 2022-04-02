@@ -63,6 +63,15 @@ func NewClient(url string, chainId string) (*TeleportClient, error) {
 	}, nil
 }
 
+func (client *TeleportClient) WithAccountRetriever(accountRetriever *types.AccountRetriever) *TeleportClient {
+	client.accountRetriever = accountRetriever
+	return client
+}
+
+func (client *TeleportClient) GetAccountRetriever() *types.AccountRetriever {
+	return client.accountRetriever
+}
+
 func (client *TeleportClient) WithChainId(chainId string) *TeleportClient {
 	client.ctx = client.ctx.WithChainID(chainId)
 	return client

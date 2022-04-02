@@ -50,7 +50,7 @@ func Prepare(client *TeleportClient, signer sdk.AccAddress, msg sdk.Msg, options
 // Broadcast Sign and broadcast to node. It is retryable.
 func (client *TeleportClient) Broadcast(txf sdktx.Factory, msgs ...sdk.Msg) (res *tx.BroadcastTxResponse, err error) {
 	retryableFunc := func() error {
-		txf, err := setupAccNumberSequence(client.ctx, client.accountRetriever, txf)
+		txf, err := SetupAccNumberSequence(client.ctx, client.accountRetriever, txf)
 		if err != nil {
 			return err
 		}
@@ -113,7 +113,7 @@ func (client *TeleportClient) broadcast(txf sdktx.Factory, msgs ...sdk.Msg) (*tx
 // it is retryable
 func (client *TeleportClient) CalculateGas(txf sdktx.Factory, msgs ...sdk.Msg) (res *tx.SimulateResponse, gas uint64, err error) {
 	retryableFunc := func() error {
-		txf, err = setupAccNumberSequence(client.ctx, client.accountRetriever, txf)
+		txf, err = SetupAccNumberSequence(client.ctx, client.accountRetriever, txf)
 		if err != nil {
 			return err
 		}
@@ -192,11 +192,11 @@ func convertBroadcastMode(mode string) tx.BroadcastMode {
 	}
 }
 
-// setupAccNumberSequence ensures the account defined by ctx.GetFromAddress() exists and
+// SetupAccNumberSequence ensures the account defined by ctx.GetFromAddress() exists and
 // if the account number and/or the account sequence number are zero (not set),
 // they will be queried for and set on the provided Factory. A new Factory with
 // the updated fields will be returned.
-func setupAccNumberSequence(clientCtx client.Context, accountRetriever *types.AccountRetriever, txf sdktx.Factory) (sdktx.Factory, error) {
+func SetupAccNumberSequence(clientCtx client.Context, accountRetriever *types.AccountRetriever, txf sdktx.Factory) (sdktx.Factory, error) {
 	from := clientCtx.GetFromAddress()
 
 	if err := accountRetriever.EnsureExists(clientCtx, from); err != nil {
