@@ -68,6 +68,27 @@ func (ar *AccountRetriever) GetAccount(clientCtx client.Context, addr sdk.AccAdd
 	return acc, err
 }
 
+func (ar *AccountRetriever) RefreshSequence(clientCtx client.Context) (authtypes.AccountI, error) {
+	from := clientCtx.GetFromAddress()
+
+	res, err := ar.QueryClient.AuthQuery.Account(context.Background(), &authtypes.QueryAccountRequest{Address: from.String()})
+	if err != nil {
+		return nil, err
+	}
+
+	var acc authtypes.AccountI
+	if err := clientCtx.InterfaceRegistry.UnpackAny(res.Account, &acc); err != nil {
+		return nil, err
+	}
+	err = acc.SetSequence(acc.GetSequence() + 1)
+	if err != nil {
+		return nil, err
+	}
+	_ = ar.Cache.Set(from.String(), acc)
+
+	return acc, err
+}
+
 // EnsureExists returns an error if no account exists for the given address else nil.
 func (ar *AccountRetriever) EnsureExists(clientCtx client.Context, addr sdk.AccAddress) error {
 	if _, err := ar.GetAccount(clientCtx, addr); err != nil {
