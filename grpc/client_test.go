@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/cosmos/cosmos-sdk/x/bank/types"
+	"github.com/stretchr/testify/require"
 )
 
-const GrpcUrl = "3.0.202.217:9090"
+const GrpcUrl = "grpc0.testnet.teleport.network:443"
 
 func TestQueryBalance(t *testing.T) {
-	c, err := NewGRPCClient(GrpcUrl)
-	assert.NoError(t, err)
-	res, _ := c.BankQuery.Balance(context.Background(), &types.QueryBalanceRequest{Address: "teleport1qz4xxmn73s8tkttqkw396vklcanl5nzkappyzy", Denom: "atele"})
+	c, err := NewGRPCClientWithTLSDefault(GrpcUrl)
+	require.NoError(t, err)
+	res, err := c.BankQuery.Balance(context.Background(), &types.QueryBalanceRequest{Address: "teleport1r60jksyacp3cstz3q5l83suyhtfmm3cautjs68", Denom: "atele"})
+	require.NoError(t, err)
 	fmt.Println(res.String())
 }

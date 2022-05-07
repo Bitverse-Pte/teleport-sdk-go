@@ -1,8 +1,7 @@
 package grpc
 
 import (
-	grpc1 "github.com/gogo/protobuf/grpc"
-	"google.golang.org/grpc"
+	"crypto/tls"
 
 	"github.com/cosmos/cosmos-sdk/client/grpc/tmservice"
 	"github.com/cosmos/cosmos-sdk/types/tx"
@@ -13,6 +12,10 @@ import (
 	abcitypes "github.com/teleport-network/teleport/grpc_abci/types"
 	xibcclitypes "github.com/teleport-network/teleport/x/xibc/core/client/types"
 	xibcpkttypes "github.com/teleport-network/teleport/x/xibc/core/packet/types"
+
+	grpc1 "github.com/gogo/protobuf/grpc"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials"
 )
 
 type GClient struct {
@@ -31,7 +34,25 @@ func NewGRPCClient(url string) (GClient, error) {
 	dialOpts := []grpc.DialOption{
 		grpc.WithInsecure(),
 	}
-	clientConn, err := grpc.Dial(url, dialOpts...)
+	return buildGRPCClient(url, dialOpts...)
+}
+
+func NewGRPCClientWithTLSDefault(url string) (GClient, error) {
+	dialOpts := []grpc.DialOption{
+		grpc.WithTransportCredentials(credentials.NewTLS(&tls.Config{})),
+	}
+	return buildGRPCClient(url, dialOpts...)
+}
+
+func NewGRPCClientWithTLS(url string, c *tls.Config) (GClient, error) {
+	dialOpts := []grpc.DialOption{
+		grpc.WithTransportCredentials(credentials.NewTLS(c)),
+	}
+	return buildGRPCClient(url, dialOpts...)
+}
+
+func buildGRPCClient(url string, opts ...grpc.DialOption) (GClient, error) {
+	clientConn, err := grpc.Dial(url, opts...)
 	if err != nil {
 		return GClient{}, err
 	}
