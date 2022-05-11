@@ -8,7 +8,7 @@ import (
 	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
 	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
 	govtypes "github.com/cosmos/cosmos-sdk/x/gov/types"
-
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	abcitypes "github.com/teleport-network/teleport/grpc_abci/types"
 	xibcclitypes "github.com/teleport-network/teleport/x/xibc/core/client/types"
 	xibcpkttypes "github.com/teleport-network/teleport/x/xibc/core/packet/types"
@@ -23,6 +23,7 @@ type GClient struct {
 	AuthQuery       authtypes.QueryClient
 	BankQuery       banktypes.QueryClient
 	GovQuery        govtypes.QueryClient
+	StakingQuery    stakingtypes.QueryClient
 	XIBCClientQuery xibcclitypes.QueryClient
 	XIBCPacketQuery xibcpkttypes.QueryClient
 	ABCIQuery       abcitypes.ABCIQueryClient
@@ -63,6 +64,7 @@ func buildGRPCClient(url string, opts ...grpc.DialOption) (GClient, error) {
 		ABCIQuery:       abcitypes.NewABCIQueryClient(clientConn),
 		BankQuery:       banktypes.NewQueryClient(clientConn),
 		AuthQuery:       authtypes.NewQueryClient(clientConn),
+		StakingQuery:    stakingtypes.NewQueryClient(clientConn),
 		TMServiceQuery:  tmservice.NewServiceClient(clientConn),
 		TxClient:        tx.NewServiceClient(clientConn),
 	}, nil
